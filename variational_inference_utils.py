@@ -15,11 +15,15 @@ def exp_normalize(arr):
     return exp_arr / np.sum(exp_arr)
 
 def linear_time_natural_gradient(g, h, z):
-    # Gradient g, Hessian H = diag(h) + 1 * z * 1^T
+    # Gradient g, Hessian H = diag(h) + 1 * z * 1^T (both already scaled by batch size if needed)
     # based on the special structure of Hessian matrix w.r.t alpha or xi, using Woodbury matrix identity
     c = np.sum(g/h) / (1/z + np.sum(1/h))
     return (g-c)/h
 
-def stochastic_update(old_value, value_hat, rho):
+def stochastic_variational_update(old_value, value_hat, rho):
     new_value = (1 - rho) * old_value + rho * value_hat
+    return new_value
+
+def stochastic_hyperparameter_update(old_value, value_hat, rho):
+    new_value = old_value - rho * value_hat
     return new_value
