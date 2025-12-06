@@ -4,8 +4,11 @@ def normalize_vector(arr):
     arr_sum = np.sum(arr)
     return arr / arr_sum
 
-def normalize_by_row(arr):
-    return (arr.T / arr.sum(axis=1)).T
+def exp_normalize_by_row(arr):
+    # exponentiate, and then normalize to 1 by each row (using the idea of log-sum-exp)
+    arr_rowmax = arr.max(axis=1)
+    arr_new = np.exp(arr.T - arr_rowmax)
+    return (arr_new / arr_new.sum(axis=0)).T
 
 def exp_normalize(arr):
     # exponentiate, and then normalize to 1 (using the idea of log-sum-exp)
@@ -27,3 +30,7 @@ def stochastic_variational_update(old_value, value_hat, rho):
 def stochastic_hyperparameter_update(old_value, value_hat, rho):
     new_value = old_value - rho * value_hat
     return new_value
+
+def create_gamma_matrix():
+    # convert gamma into matrix format, which is required in M step
+    pass

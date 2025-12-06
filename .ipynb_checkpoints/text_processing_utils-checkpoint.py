@@ -76,4 +76,5 @@ def create_bag_of_words(corpus, df_min, df_max_proportion, tfidf_threshold_q, to
             del word_counts_by_document[k][k2]
     return word_counts_by_document, vocab_new, n
 
-self.word_indices = {d:np.hstack([[k]*v for k,v in bag.items()]) for d,bag in enumerate(bow)} # convert the dictionary of word counts into an array
+def convert_bow(bow):
+    return {d:np.hstack([[k]*v for k,v in bag.items()]) for d,bag in enumerate(bow)} # convert the dictionary of word counts into an array
